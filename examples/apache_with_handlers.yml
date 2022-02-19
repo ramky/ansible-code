@@ -1,0 +1,29 @@
+---
+ - name: Web Hosting Using Apache service
+   hosts: appserver
+   become: yes
+   tasks:
+     - name: Installing Apache/HTTPD
+       yum:
+          name: httpd
+          state: latest
+       notify: RestartApache
+
+     - name: Create index.html
+       copy:
+          content: "WELCOME to simplilearn for AUTOMATION"
+          dest: /var/www/html/index.html
+
+     - name: Ensure the default Apache port is 80
+       lineinfile:
+          path: /etc/httpd/conf/httpd.conf
+          regexp: '^Listen '
+          line: Listen 80
+       notify: RestartApache
+
+   handlers:
+     - name: RestartApache
+       service:
+          name: httpd
+          state: restarted
+          enabled: yes

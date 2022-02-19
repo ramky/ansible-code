@@ -1,0 +1,15 @@
+- name: Webserver & db deployment
+  hosts:
+    - appserver
+    - dbserver
+  become:  yes
+  vars:
+    - mystate:       present
+    - documentroot: /var/www/html/
+  tasks:
+    - name: Installing {{ package1 }}
+      yum: name={{ package1 }} state={{ mystate }}
+
+    - name: Starting {{ service1 }} service
+      service: name={{ service1 }} state=started enabled=yes
+

@@ -1,0 +1,11 @@
+---
+- name: delete user {{ user}}
+  user:
+    name: "{{ user }}"
+    # commented due to lintin error
+    #state: "{{ state }}"
+  notify: delete_home_dir
+
+- name: task2
+  debug:
+    msg: 'I am running role first time'

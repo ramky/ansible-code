@@ -1,0 +1,15 @@
+---
+- name: creating s3 bucket
+  hosts: localhost
+  tasks:
+    - name: creating bucket
+      aws_s3:
+        bucket: ram-ansible-test-123
+        mode: create
+    - name: putting object
+      aws_s3:
+        bucket: ram-ansible-test-123
+        object: "test.txt"
+        src: "./test.txt"
+        permission: public-read
+        mode: put

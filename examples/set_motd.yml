@@ -1,0 +1,11 @@
+---
+- name: Setting up MOTD
+  hosts:
+    - appserver
+    - dbserver
+  become: yes
+  vars:
+    - today_admin: 'paulsimon'
+  tasks:
+    - name: setting motd from template
+      template: src=motd.j2 dest=/etc/motd

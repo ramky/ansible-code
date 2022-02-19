@@ -1,0 +1,15 @@
+---
+- name: Play1
+  hosts: myservers
+  become: yes
+  tasks:
+    - name: Create Jazz group
+      group:
+        name: jazz
+        state: present
+    - name: Create rwaters user in jazz group
+      user:
+        name: rwaters
+        uid: '8000'
+        groups: jazz
+        state: present

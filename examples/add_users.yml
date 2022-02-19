@@ -1,0 +1,14 @@
+---
+ - hosts: appserver
+   become: yes
+   vars_files:
+           - myvars.yml
+   tasks:
+           - name: Adding Users
+             user:
+                name: "{{ item }}"
+                state: present
+             loop:
+                     - "{{ user1 }}"
+                     - "{{ user2 }}"
+                     - "{{ user3 }}"

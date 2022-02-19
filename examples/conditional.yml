@@ -1,0 +1,17 @@
+---
+- name: Play to read facts and when condition demo
+  hosts:
+    - appserver
+    - dbserver
+  become:  yes
+  # gather_facts: no
+  tasks:
+    - name: run yum if Redhat
+      yum: name=httpd state=present
+      when: ansible_os_family == 'RedHat'
+    - name: run apt if Debian
+      apt: name=tree state=present
+      when: ansible_os_family == 'Debian'
+    - name: sample task
+      debug:
+        msg: 'This is my last task'

@@ -1,0 +1,36 @@
+---
+- hosts: appserver
+  tasks:
+    - command: "hostname -f"
+      register: app_host
+    - debug:
+        msg: "App Hostname: {{ app_host.stdout }}"
+
+- hosts: dbserver
+  tasks:
+    - command: "hostname -f"
+      register: mysql_host
+    - debug:
+        msg: "DB Hostname: {{ mysql_host.stdout }}"
+
+- hosts: dbserver
+  become: true
+  vars:
+    # Passing the app host to db server to whitelist in mysql
+    app_host: "{{ hostvars[groups['appserver'][0]]['app_host'].stdout }}"
+  vars_files:
+    - vars/default.yml
+  roles:
+    - mysql_server
+# - hosts: appserver
+#   become: true
+#   vars_files:
+#     - vars/default.yml
+#   vars:
+#     # Passing the host to app server used to connect in wordpress to mysql server
+#     app_host: "{{ hostvars[groups['dbserver'][0]]['mysql_host'].stdout }}"
+#   roles:
+#     - mysql
+#     - apache
+#     - php
+#     - wordpress

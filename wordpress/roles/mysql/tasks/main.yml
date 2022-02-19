@@ -1,0 +1,8 @@
+---
+- name: Install MySQL Client Packages
+  yum:
+    name: "{{ item }}"
+    update_cache: yes
+    state: latest
+  loop: ["php-mysqlnd", "python3-PyMySQL", "mysql"]
+

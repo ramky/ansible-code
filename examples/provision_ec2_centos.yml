@@ -1,0 +1,16 @@
+---
+- name: Launch EC2
+  hosts: localhost
+  vars:
+    tag: ansible-test-centos
+  tasks:
+    - name: EC2
+      ec2:
+        key_name: simplilearn_test
+        instance_type: t2.micro
+        image: ami-096fda3c22c1c990a
+        region: us-east-1
+        count: 1
+        wait: yes
+        instance_tags:
+          Name: "{{ tag }}"

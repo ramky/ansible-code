@@ -1,0 +1,20 @@
+---
+- hosts: appserver
+  tasks:
+    - command: "hostname -f"
+      register: app_host
+    - block:
+      - set_fact:
+          app_hostname: "{{ app_host.stdout }}"
+      - debug:
+          msg: "App Hostname: {{ app_hostname }}"
+
+- hosts: dbserver
+  tasks:
+    - command: "hostname -f"
+      register: db_host
+    - block:
+      - set_fact:
+          db_hostname: "{{ db_host.stdout }}"
+      - debug:
+          msg: "DB Hostname: {{ db_hostname }}"

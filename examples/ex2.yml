@@ -1,0 +1,26 @@
+---
+# Creates user1 and directory
+- name: create user1
+  hosts: 
+    - appserver
+      dbserver
+  become: yes
+  tasks:
+    - name: Creat user user1
+      user: name=user1 state=present home=/user1
+
+    - name: Create file in /tmp
+      copy: dest=/tmp/welcome.txt content="Hello from Ansible"
+
+- name: create directory for users home
+  hosts: 
+    - appserver
+      dbserver
+  become: yes
+  tasks:
+    - name: Creating directory
+      file: name=/user1 state=directory owner=user1
+
+    - name: Create file in /tmp
+      copy: dest=/tmp/welcome.txt content="Hello from Ansible"
+

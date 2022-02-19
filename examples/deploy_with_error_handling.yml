@@ -1,0 +1,26 @@
+---
+ - name: Play1 for apche httpd server on RHEL 8
+   hosts: appserver
+   become: yes
+   ignore_errors: yes
+   tasks:
+     - name: Installing httpd....
+       yum: name=http state=present
+       when: ansible_os_family == "RedHat"
+       #       ignore_errors: yes
+
+     - name: Installing apache2....
+       apt: name=apache2 state=present
+       when: ansible_os_family == "Debian"
+
+     - name: Starting Apache HTTPD service on RedHat
+       service: name=httpdaaaa state=started enabled=yes
+       when: ansible_os_family == "RedHat"
+       ignore_errors: yes
+
+     - name: Starting Apache HTTPD service on ubuntu
+       service: name=apach2 state=started enabled=yes
+       when: ansible_os_family == "Debian"
+
+     - name: Clone git repo
+       git: repo=https://github.com/pavansw/first.git dest=/var/www/html

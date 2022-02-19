@@ -1,0 +1,14 @@
+---
+- name: Loop Demo
+  hosts:
+    - appserver
+  become:  yes
+  tasks:
+    - name: Adding users
+      user: name={{ item.username }} state=present  shell={{ item.shell }}
+      loop:
+        - {"username" : "roger_waters", "shell" : "/bin/bash" }
+        - {"username" : "dave_gilmour", "shell" : "/bin/zsh" }
+        - {"username" : "paul_simon", "shell" : "/bin/bash" }
+      when: ansible_os_family == 'RedHat' and ansible_bios_version == '4.2.amazon'
+

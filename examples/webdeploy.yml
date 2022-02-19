@@ -1,0 +1,21 @@
+---
+- name: Webserver deployment
+  hosts:
+    - appserver
+  become:  yes
+  vars:
+    - package1:      httpd
+    - service1:      httpd
+    - protocol1:     http
+    - mystate:       present
+    - documentroot: /var/www/html/
+  tasks:
+    - name: Installing {{ package1 }}
+      yum: name={{ package1 }} state={{ mystate }}
+
+    - name: Starting {{ service1 }} service
+      service: name={{ service1 }} state=started enabled=yes
+
+    - name: Copy webpages to document root
+      copy: src=sample.html dest={{ documentroot }}/index.html
+

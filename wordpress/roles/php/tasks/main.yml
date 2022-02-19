@@ -1,0 +1,38 @@
+- name: Install Remi RPM Key
+  rpm_key:
+    state: present
+    key: https://rpms.remirepo.net/RPM-GPG-KEY-remi2018
+
+- name: Install EPEL RPM Key
+  rpm_key:
+    state: present
+    key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-8
+
+- name: Install EPEL Release
+  yum:
+    name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+    update_cache: yes
+    state: latest
+
+- name: Install PHP Remi Repository
+  yum:
+    name: http://rpms.remirepo.net/enterprise/remi-release-8.rpm
+    update_cache: yes
+    state: latest
+
+- name: Reset PHP Remi Repository
+  command: dnf module reset php -y
+  args:
+    warn: False
+
+- name: Enable PHP Remi Repository
+  command: dnf module enable php:remi-7.4 -y
+  args:
+    warn: False
+
+- name: Install PHP Extensions
+  yum:
+    name: "{{ item }}"
+    update_cache: yes
+    state: latest
+  loop: "{{ php_modules }}"
