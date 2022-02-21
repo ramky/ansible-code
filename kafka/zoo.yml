@@ -1,13 +1,17 @@
-- name: Add specified repository into sources list
-  ansible.builtin.apt_repository:
-    repo: "deb [arch=amd64] https://packages.confluent.io/deb/5.2 stable main"
-    state: present
+---
+ - hosts: zoo_servers
+   become: yes
+   tasks:
+    - name: Add specified repository into sources list
+      ansible.builtin.apt_repository:
+        repo: "deb [arch=amd64] https://packages.confluent.io/deb/5.2 stable main"
+        state: present
 
-- name: Run the equivalent of "apt-get update" as a separate step
-  apt:
-    update_cache: yes
+    - name: Run the equivalent of "apt-get update" as a separate step
+      apt:
+        update_cache: yes
 
-- name: Install latest version of "openjdk-8-jdk and confluent-community 2.1"
-  apt:
-    name: openjdk-8-jdk confluent-community-2.1
-    state: latest
+    - name: Install latest version of "openjdk-8-jdk and confluent-community 2.1"
+      apt:
+        name: openjdk-8-jdk confluent-community-2.1
+        state: latest
