@@ -16,5 +16,7 @@
 
     - name: Install latest version of "openjdk-8-jdk and confluent-community 2.1"
       apt:
-        name: openjdk-8-jdk confluent-community-2.1
+        name:
+          - openjdk-8-jdk
+          - confluent-community-2.1
         state: latest
