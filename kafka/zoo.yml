@@ -14,9 +14,9 @@
       apt:
         update_cache: yes
 
-    - name: Install latest version of "openjdk-8-jdk and confluent-community 2.1"
+    - name: Install latest version of "openjdk-8-jdk and confluent-community 2.12"
       apt:
         name:
           - openjdk-8-jdk
-          - confluent-community-2.1
+          - confluent-community-2.12
         state: latest
