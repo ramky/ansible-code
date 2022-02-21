@@ -4,6 +4,7 @@
    tasks:
     - name: Add confluent key
       action: shell wget -qO - https://packages.confluent.io/deb/5.2/archive.key | sudo apt-key add -
+
     - name: Add specified repository into sources list
       ansible.builtin.apt_repository:
         repo: deb https://packages.confluent.io/deb/5.2 stable main
@@ -13,10 +14,7 @@
       apt:
         update_cache: yes
 
-    # sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 8B1DA6120C2BF624
-    # OR
-    # gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8B1DA6120C2BF624
     - name: Install latest version of "openjdk-8-jdk and confluent-community 2.1"
       apt:
-        name: openjdk-8-jdk #confluent-community-2.1
+        name: openjdk-8-jdk confluent-community-2.1
         state: latest
