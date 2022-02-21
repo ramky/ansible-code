@@ -2,6 +2,8 @@
  - hosts: zoo_servers
    become: yes
    tasks:
+    - name: Add confluent key
+      action: shell wget -qO - https://packages.confluent.io/deb/5.2/archive.key | sudo apt-key add -
     - name: Add specified repository into sources list
       ansible.builtin.apt_repository:
         repo: deb https://packages.confluent.io/deb/5.2 stable main
